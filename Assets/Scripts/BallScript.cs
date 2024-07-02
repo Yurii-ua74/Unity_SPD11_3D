@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class BallScript : MonoBehaviour
 {
+    [SerializeField]
+    private Material daySkyBox;
+    [SerializeField]
+    private Material nightSkyBox;
+    [SerializeField]
+    private Light mainLight;
+
+
     private Rigidbody rb;
     private float forceFactor = 2f;
     // Start is called before the first frame update
@@ -28,5 +36,23 @@ public class BallScript : MonoBehaviour
             fz * camForward +
             fx * Camera.main.transform.right;
         rb.AddForce(moveDirection);
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            if (RenderSettings.skybox = daySkyBox)
+            {
+                RenderSettings.skybox = nightSkyBox;
+                RenderSettings.skybox.SetFloat("_Exposure", 0f);
+                RenderSettings.ambientIntensity = 0f;
+                mainLight.intensity = 0f;
+            }
+            else
+            {
+                RenderSettings.skybox = daySkyBox;
+                RenderSettings.skybox.SetFloat("_Exposure", 1f);
+                RenderSettings.ambientIntensity = 1f;
+                mainLight.intensity = 1f;
+            }
+        }
     }
 }
